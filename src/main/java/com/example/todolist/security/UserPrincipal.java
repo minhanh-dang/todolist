@@ -15,7 +15,7 @@ public class UserPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -29,7 +29,7 @@ public class UserPrincipal implements UserDetails {
 
     public Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Integer id, String name, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -38,11 +38,11 @@ public class UserPrincipal implements UserDetails {
 
     public static UserPrincipal build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
         return new UserPrincipal(user.getId(), user.getUserName(), user.getPassword(), authorities);
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -10,7 +10,9 @@ public interface ToDoService {
 
     List<User> addUsers(List<User> userInfos);
 
-    String updateUser(User userInfo);
+    List<User> getUsers(List<User> userInfos);
+
+    User updateUser(User userInfo);
 
     String deleteUser(int id);
 

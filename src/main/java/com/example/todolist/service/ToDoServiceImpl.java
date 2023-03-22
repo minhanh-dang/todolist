@@ -38,10 +38,23 @@ public class ToDoServiceImpl implements ToDoService{
     }
 
     @Override
-    String updateUser(User userInfo);
+    public List<User> getUsers(List<User> userInfos){
+        return userInfoRepository.findAll();
+    }
 
     @Override
-    String deleteUser(int id);
+    public User updateUser(User userInfo){
+        User existingUser = userInfoRepository.findById(userInfo.getId()).orElse(null);
+        existingUser.setUserName(userInfo.getUserName());
+        existingUser.setPassword(userInfo.getPassword());
+        return userInfoRepository.save(existingUser);
+    }
+
+    @Override
+    public String deleteUser(int id){
+        userInfoRepository.deleteById(id);
+        return "User deleted: " + id;
+    }
 
     @Override
     public ToDoDTO createToDo(ToDoDTO toDoDTO){

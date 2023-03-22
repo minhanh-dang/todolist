@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Optional<User> optUser = repository.findByName(userName);
 
         if(!optUser.isPresent()){
-            throw new BadRequestException("User Not Present!");
+            throw new BadRequestException("User Not Found");
         }
         return UserPrincipal.build(optUser.get());
     }
