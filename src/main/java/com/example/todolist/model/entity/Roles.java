@@ -16,16 +16,16 @@ import java.util.Set;
 @Table(name = "Roles")
 public class Roles {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "roleName")
-    private RoleName roleName; // use String instead of RoleName? what's the difference
+	@Enumerated(EnumType.STRING)
+	@Column(name = "roleName")
+	private RoleName roleName; // use String instead of RoleName? what's the difference
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users;
 
 }
