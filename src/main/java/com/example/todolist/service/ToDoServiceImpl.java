@@ -94,7 +94,7 @@ public class ToDoServiceImpl implements ToDoService{
 
     @Override
     public ToDoDTO updateToDo(ToDoDTO toDo) {
-        ToDo existingToDo = toDoRepository.findById(toDo.getId()).orElse(null);
+        ToDo existingToDo = toDoRepository.findById(toDo.getId());
         existingToDo.setName(toDo.getName());
         existingToDo.setStatus(toDo.getStatus());
         ToDo updatedToDo = toDoRepository.save(existingToDo);

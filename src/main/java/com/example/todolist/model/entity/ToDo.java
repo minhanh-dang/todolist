@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 
 @Entity
 @Getter
@@ -20,10 +19,17 @@ public class ToDo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "status")
-    private String status;
+    private ToDoStatus status;
+
+    @Column(name = "dateCreated", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private java.sql.Date dateCreated;
 
 }
