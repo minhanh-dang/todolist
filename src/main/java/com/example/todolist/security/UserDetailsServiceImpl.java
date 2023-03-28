@@ -1,30 +1,39 @@
 package com.example.todolist.security;
 
-import com.example.todolist.model.entity.User;
-import com.example.todolist.model.exception.BadRequestException;
-import com.example.todolist.repository.UserInfoRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import com.example.todolist.model.entity.User;
+import com.example.todolist.model.exception.BadRequestException;
+import com.example.todolist.repository.UserRepository;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserInfoRepository repository;
+	@Autowired
+	private UserRepository repository;
 
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
-        Optional<User> optUser = repository.findByUserName(userName);
+	@Override
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		Optional<User> optUser = repository.findByUserName(userName);
 
+<<<<<<< HEAD
         if(!optUser.isPresent()){
             throw new BadRequestException("User Not Found");
         }
         return UserPrincipal.build(optUser.get());
     }
 
+=======
+		if (!optUser.isPresent()) {
+			throw new BadRequestException("User Not Found");
+		}
+		return UserPrincipal.build(optUser.get());
+	}
+>>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 }

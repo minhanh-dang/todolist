@@ -1,10 +1,18 @@
 package com.example.todolist.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.example.todolist.model.DTO.ToDoDTO;
 import com.example.todolist.model.entity.ToDo;
 import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.ToDoMapper;
 import com.example.todolist.repository.ToDoRepository;
+<<<<<<< HEAD
 import com.example.todolist.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,36 +21,40 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+=======
+import com.example.todolist.repository.UserRepository;
+>>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
 @Service
-public class ToDoServiceImpl implements ToDoService{
+public class ToDoServiceImpl implements ToDoService {
 
-    @Autowired
-    private ToDoRepository toDoRepository;
+	@Autowired
+	private ToDoRepository toDoRepository;
 
-    @Autowired
-    private UserInfoRepository userInfoRepository;
+	@Autowired
+	private UserRepository userInfoRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Override
-    public String addUser(User userInfo){
-        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-        userInfoRepository.save(userInfo);
-        return "User added";
-    }
+	@Override
+	public String addUser(User userInfo) {
+		userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+		userInfoRepository.save(userInfo);
+		return "User added";
+	}
 
-    @Override
-    public List<User> addUsers(List<User> userInfos){
-        return userInfoRepository.saveAll(userInfos);
-    }
+	@Override
+	public List<User> addUsers(List<User> userInfos) {
+		return userInfoRepository.saveAll(userInfos);
+	}
 
-    @Override
-    public List<User> getUsers(List<User> userInfos){
-        return userInfoRepository.findAll();
-    }
+	@Override
+	public List<User> getUsers(List<User> userInfos) {
+		return userInfoRepository.findAll();
+	}
 
+<<<<<<< HEAD
 
 
     @Override
@@ -52,36 +64,45 @@ public class ToDoServiceImpl implements ToDoService{
         existingUser.setPassword(userInfo.getPassword());
         return userInfoRepository.save(existingUser);
     }
+=======
+	@Override
+	public User updateUser(User userInfo) {
+//        User existingUser = userInfoRepository.findById(userInfo.getId()).orElse(null);
+//        existingUser.setUserName(userInfo.getUserName());
+//        existingUser.setPassword(userInfo.getPassword());
+//        return userInfoRepository.save(existingUser);
+		return null;
+	}
+>>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
-    @Override
-    public String deleteUser(int id){
-        userInfoRepository.deleteById(id);
-        return "User deleted: " + id;
-    }
+	@Override
+	public String deleteUser(int id) {
+//		userInfoRepository.deleteById(id);
+//		return "User deleted: " + id;
+		return null;
+	}
 
-    @Override
-    public ToDoDTO createToDo(ToDoDTO toDoDTO){
-        ToDo toDo = ToDoMapper.getInstance().toEntity(toDoDTO);
-        return ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo));
-    }
+	@Override
+	public ToDoDTO createToDo(ToDoDTO toDoDTO) {
+		ToDo toDo = ToDoMapper.getInstance().toEntity(toDoDTO);
+		return ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo));
+	}
 
-    @Override
-    public List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS) {
-        List<ToDo> toDos = toDoDTOS.stream().map(toDo -> ToDoMapper.getInstance().toEntity(toDo))
-                .collect(Collectors.toList());
-        List<ToDoDTO> toDoDTOList = toDos.stream()
-                .map(toDo -> ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo)))
-                .collect(Collectors.toList());
-        return toDoDTOList;
-    }
-    /////// GET method //////////
+	@Override
+	public List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS) {
+		List<ToDo> toDos = toDoDTOS.stream().map(toDo -> ToDoMapper.getInstance().toEntity(toDo))
+				.collect(Collectors.toList());
+		List<ToDoDTO> toDoDTOList = toDos.stream()
+				.map(toDo -> ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo))).collect(Collectors.toList());
+		return toDoDTOList;
+	}
+	/////// GET method //////////
 
-    @Override
-    public List<ToDoDTO> getAllToDos(){
-        return toDoRepository.findAll().stream().map(toDo -> ToDoMapper.getInstance().toDTO(toDo))
-                .collect(Collectors.toList());
-    }
-
+	@Override
+	public List<ToDoDTO> getAllToDos() {
+		return toDoRepository.findAll().stream().map(toDo -> ToDoMapper.getInstance().toDTO(toDo))
+				.collect(Collectors.toList());
+	}
 
 //    @Override
 //    public ToDoDTO getToDoById(int id) {
@@ -95,18 +116,18 @@ public class ToDoServiceImpl implements ToDoService{
 //        return ToDoMapper.getInstance().toDTO(toDo);
 //    }
 
-    @Override
-    public ToDoDTO updateToDo(ToDoDTO toDo) {
-        ToDo existingToDo = toDoRepository.findById(toDo.getId());
-        existingToDo.setName(toDo.getName());
-        existingToDo.setStatus(toDo.getStatus());
-        ToDo updatedToDo = toDoRepository.save(existingToDo);
-        return ToDoMapper.getInstance().toDTO(updatedToDo);
-    }
+	@Override
+	public ToDoDTO updateToDo(ToDoDTO toDo) {
+		ToDo existingToDo = toDoRepository.findById(toDo.getId());
+		existingToDo.setName(toDo.getName());
+		existingToDo.setStatus(toDo.getStatus());
+		ToDo updatedToDo = toDoRepository.save(existingToDo);
+		return ToDoMapper.getInstance().toDTO(updatedToDo);
+	}
 
-    @Override
-    public String deleteToDo(int id) {
-        toDoRepository.deleteById(id);
-        return "ToDo removed: " + id;
-    }
+	@Override
+	public String deleteToDo(int id) {
+		toDoRepository.deleteById(id);
+		return "ToDo removed: " + id;
+	}
 }

@@ -14,27 +14,27 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
-    private final AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
-    private final JwtService jwtService;
+	private final JwtService jwtService;
 
-    @Override
-    public AuthenticationResponse authenticate(LoginRequest request){
-        Date expiredAt = new Date((new Date()).getTime() + 86400 * 1000);
+	@Override
+	public AuthenticationResponse authenticate(LoginRequest request) {
+		Date expiredAt = new Date((new Date()).getTime() + 86400 * 1000);
 
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getName(), request.getPassword()));
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(request.getName(), request.getPassword()));
 
-        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            String jwt = jwtService.generateToken(authentication);
-            return AuthenticationResponse.builder().token(jwt).expiredAt(expiredAt).build();
-        } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            String jwt = jwtService.generateToken(authentication);
-            return AuthenticationResponse.builder().token(jwt).expiredAt(expiredAt).build();
-        } else {
-            throw new BadRequestException("Username or Password is incorrect!");
-        }
-    }
+		if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+			String jwt = jwtService.generateToken(authentication);
+			return AuthenticationResponse.builder().token(jwt).expiredAt(expiredAt).build();
+		} else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+			String jwt = jwtService.generateToken(authentication);
+			return AuthenticationResponse.builder().token(jwt).expiredAt(expiredAt).build();
+		} else {
+			throw new BadRequestException("Username or Password is incorrect!");
+		}
+	}
 }
