@@ -4,11 +4,14 @@ import com.example.todolist.model.DTO.ToDoDTO;
 import com.example.todolist.model.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ToDoService {
     String addUser(User userInfo);
 
     List<User> addUsers(List<User> userInfos);
+
+//    Optional<User> getUserById(int id);
 
     List<User> getUsers(List<User> userInfos);
 

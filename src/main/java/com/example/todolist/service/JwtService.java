@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractId(String token){ return extractClaim(token, Claims::getId);}
+
     public Date extractExpiration(String token){
         return extractClaim(token, Claims::getExpiration);
     }
@@ -48,6 +51,11 @@ public class JwtService {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public Boolean validateToken1(String token, UserPrincipal userPrincipal) {
+        final String userId = extractId(token);
+        return (userId.equals(userPrincipal.getId()) && !isTokenExpired(token));
     }
 
     public String generateToken(String userName) {
