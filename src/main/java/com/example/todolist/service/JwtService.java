@@ -81,4 +81,13 @@ public class JwtService {
 				.setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
 				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
+
+	public boolean isTokenValid(String jwt, UserDetails userDetails) {
+		final String username = extractUsername(jwt);
+		return (username.equals(userDetails.getUsername()) && !isTokenExpired(jwt));
+	}
+
+	public Claims getClaims(String jwt) {
+		return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(jwt).getBody();
+	}
 }

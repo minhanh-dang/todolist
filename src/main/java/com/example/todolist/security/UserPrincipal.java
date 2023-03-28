@@ -13,109 +13,109 @@ import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Integer id;
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private String email;
+	private String email;
 
-    @JsonIgnore
-    private String password;
+	@JsonIgnore
+	private String password;
 
-    @JsonIgnore
-    private boolean lock;
+	@JsonIgnore
+	private boolean lock;
 
-    public Collection<? extends GrantedAuthority> authorities;
+	public Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Integer id, String name, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.authorities = authorities;
-    }
+	public UserPrincipal(Long id, String name, String password, Collection<? extends GrantedAuthority> authorities) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.authorities = authorities;
+	}
 
-    public static UserPrincipal build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
-        return new UserPrincipal(user.getId(), user.getUserName(), user.getPassword(), authorities);
-    }
+	public static UserPrincipal build(User user) {
+		List<GrantedAuthority> authorities = user.getRoles().stream()
+				.map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
+		return new UserPrincipal(user.getId(), user.getUserName(), user.getPassword(), authorities);
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String getUsername() {
-        return name;
-    }
+	@Override
+	public String getUsername() {
+		return name;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    public boolean isLock() {
-        return lock;
-    }
+	public boolean isLock() {
+		return lock;
+	}
 
-    public void setLock(boolean lock) {
-        this.lock = lock;
-    }
+	public void setLock(boolean lock) {
+		this.lock = lock;
+	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        if (this.lock == true) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		if (this.lock == true) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 
-    }
+	}
 
-    @Override
-    public boolean isEnabled() {
-        if (this.lock == true) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean isEnabled() {
+		if (this.lock == true) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-        UserPrincipal user = (UserPrincipal) o;
-        return Objects.equals(id, user.id);
-    }
+		UserPrincipal user = (UserPrincipal) o;
+		return Objects.equals(id, user.id);
+	}
 }
