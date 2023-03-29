@@ -43,7 +43,7 @@ public class ToDo {
 	@Column(name = "status")
 	private ToDoStatus status;
 
-	@Column(name = "dateCreated",updatable = false)
+	@Column(name = "dateCreated",updatable = true)
 	@CreationTimestamp
 	private Instant createdAt;
 

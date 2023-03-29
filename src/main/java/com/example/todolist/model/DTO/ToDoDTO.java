@@ -2,6 +2,7 @@ package com.example.todolist.model.DTO;
 
 
 import com.example.todolist.model.entity.ToDoStatus;
+import com.example.todolist.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ToDoDTO {
     private int id;
-    private int role_id;
+    private Long userId;
     private String name;
     private ToDoStatus status;
     private java.sql.Date dateCreated;

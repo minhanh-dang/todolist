@@ -1,15 +1,18 @@
 package com.example.todolist.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.todolist.model.DTO.UserDto;
+import com.example.todolist.model.entity.*;
+import com.example.todolist.model.mapper.UserMapper;
+import com.example.todolist.model.response.UserInfoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.todolist.model.DTO.ToDoDTO;
-import com.example.todolist.model.entity.ToDo;
-import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.ToDoMapper;
 import com.example.todolist.repository.ToDoRepository;
 import com.example.todolist.repository.UserRepository;
@@ -26,54 +29,27 @@ public class ToDoServiceImpl implements ToDoService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Override
-	public String addUser(User userInfo) {
-		userInfo.setUserName(userInfo.getUserName());
-		userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-		userInfoRepository.save(userInfo);
-		return "User added";
-	}
+	private ToDoMapper toDoMapper;
 
-	@Override
-	public List<User> addUsers(List<User> userInfos) {
-		return userInfoRepository.saveAll(userInfos);
-	}
-
-	@Override
-	public List<User> getUsers(List<User> userInfos) {
-		return userInfoRepository.findAll();
-	}
-
-	@Override
-	public User updateUser(User userInfo) {
-//        User existingUser = userInfoRepository.findById(userInfo.getId()).orElse(null);
-//        existingUser.setUserName(userInfo.getUserName());
-//        existingUser.setPassword(userInfo.getPassword());
-//        return userInfoRepository.save(existingUser);
-		return null;
-	}
-
-	@Override
-	public String deleteUser(int id) {
-//		userInfoRepository.deleteById(id);
-//		return "User deleted: " + id;
-		return null;
-	}
 
 	@Override
 	public ToDoDTO createToDo(ToDoDTO toDoDTO) {
-		ToDo toDo = ToDoMapper.getInstance().toEntity(toDoDTO);
-		return ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo));
+		ToDo toDo = new ToDo();
+		toDo.setName(toDoDTO.getName());
+//		toDo.setUserId(toDoDTO.getUserId());
+		ToDoStatus status = toDoRepository.findByStatus(ToDoStatus.TO_DO).getStatus();
+		toDo.setStatus(status);
+		return toDoMapper.toDTO(toDoRepository.save(toDo));
 	}
 
-	@Override
-	public List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS) {
-		List<ToDo> toDos = toDoDTOS.stream().map(toDo -> ToDoMapper.getInstance().toEntity(toDo))
-				.collect(Collectors.toList());
-		List<ToDoDTO> toDoDTOList = toDos.stream()
-				.map(toDo -> ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo))).collect(Collectors.toList());
-		return toDoDTOList;
-	}
+//	@Override
+//	public List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS) {
+//		List<ToDo> toDos = toDoDTOS.stream().map(toDo -> ToDoMapper.getInstance().toEntity(toDo))
+//				.collect(Collectors.toList());
+//		List<ToDoDTO> toDoDTOList = toDos.stream()
+//				.map(toDo -> ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo))).collect(Collectors.toList());
+//		return toDoDTOList;
+//	}
 	/////// GET method //////////
 
 	@Override

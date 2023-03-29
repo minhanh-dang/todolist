@@ -45,31 +45,32 @@ public class ToDoController {
 		return userMapper.toResponse(user);
 	}
 
-	@PostMapping("/addUsers")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	ResponseEntity<List<User>> addUsers(@RequestBody List<User> userInfos) {
-		List<User> users = service.addUsers(userInfos);
-		return new ResponseEntity<>(users, HttpStatus.OK);
-	}
+//	@PostMapping("/addUsers")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	ResponseEntity<List<User>> addUsers(@RequestBody List<UserRequest> requests) {
+//		UserDto userDto = userMapper.toDto(request);
+//		List<User> users = service.addUsers(userInfos);
+//		return new ResponseEntity<>(users, HttpStatus.OK);
+//	}
 
 	@GetMapping("/users")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	ResponseEntity<List<User>> getUsers(List<User> userInfos) {
-		List<User> users = service.getUsers(userInfos);
+	ResponseEntity<List<UserDto>> getUsers() {
+		List<UserDto> users = userService.getAllUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateUser")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	ResponseEntity<User> updateUser(@RequestBody User userInfo) {
-		User updatedUser = service.updateUser(userInfo);
+		User updatedUser = userService.updateUser(userInfo);
 		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	ResponseEntity<String> deleteUser(@PathVariable int id) {
-		service.deleteUser(id);
+		userService.deleteUser(id);
 		return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
 	}
 }

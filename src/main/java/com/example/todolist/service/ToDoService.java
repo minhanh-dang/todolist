@@ -6,21 +6,15 @@ import com.example.todolist.model.DTO.ToDoDTO;
 import com.example.todolist.model.entity.User;
 
 public interface ToDoService {
-	String addUser(User userInfo);
-
-	List<User> addUsers(List<User> userInfos);
+//	String addUser(User userInfo);
+//
+//	List<User> addUsers(List<User> userInfos);
 
 //    Optional<User> getUserById(int id);
 
-	List<User> getUsers(List<User> userInfos);
-
-	User updateUser(User userInfo);
-
-	String deleteUser(int id);
-
 	ToDoDTO createToDo(ToDoDTO toDoDTO);
 
-	List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS);
+//	List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS);
 
 	List<ToDoDTO> getAllToDos();
 

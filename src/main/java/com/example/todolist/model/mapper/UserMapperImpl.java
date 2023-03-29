@@ -42,5 +42,4 @@ public class UserMapperImpl implements UserMapper {
 
 		return userDto;
 	}
-
 }
