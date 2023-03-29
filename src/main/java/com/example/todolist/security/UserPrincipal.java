@@ -55,17 +55,6 @@ public class UserPrincipal implements UserDetails {
 		return name;
 	}
 
-<<<<<<< HEAD
-
-
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-=======
 	public String getEmail() {
 		return email;
 	}
@@ -73,7 +62,6 @@ public class UserPrincipal implements UserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
 	@Override
 	public String getPassword() {

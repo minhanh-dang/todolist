@@ -12,18 +12,7 @@ import com.example.todolist.model.entity.ToDo;
 import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.ToDoMapper;
 import com.example.todolist.repository.ToDoRepository;
-<<<<<<< HEAD
-import com.example.todolist.repository.UserInfoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-=======
 import com.example.todolist.repository.UserRepository;
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
 @Service
 public class ToDoServiceImpl implements ToDoService {
@@ -54,17 +43,6 @@ public class ToDoServiceImpl implements ToDoService {
 		return userInfoRepository.findAll();
 	}
 
-<<<<<<< HEAD
-
-
-    @Override
-    public User updateUser(User userInfo){
-        User existingUser = userInfoRepository.findById(userInfo.getId()).orElse(null);
-        existingUser.setUserName(userInfo.getUserName());
-        existingUser.setPassword(userInfo.getPassword());
-        return userInfoRepository.save(existingUser);
-    }
-=======
 	@Override
 	public User updateUser(User userInfo) {
 //        User existingUser = userInfoRepository.findById(userInfo.getId()).orElse(null);
@@ -73,7 +51,6 @@ public class ToDoServiceImpl implements ToDoService {
 //        return userInfoRepository.save(existingUser);
 		return null;
 	}
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
 	@Override
 	public String deleteUser(int id) {

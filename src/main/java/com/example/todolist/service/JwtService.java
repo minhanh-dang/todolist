@@ -1,22 +1,5 @@
 package com.example.todolist.service;
 
-<<<<<<< HEAD
-import com.example.todolist.security.UserPrincipal;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import lombok.Data;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
-import io.jsonwebtoken.Claims;
-
-import javax.persistence.criteria.CriteriaBuilder;
-=======
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,17 +37,9 @@ public class JwtService {
 		return extractClaim(token, Claims::getSubject);
 	}
 
-<<<<<<< HEAD
-    public String extractId(String token){ return extractClaim(token, Claims::getId);}
-
-    public Date extractExpiration(String token){
-        return extractClaim(token, Claims::getExpiration);
-    }
-=======
 	public Date extractExpiration(String token) {
 		return extractClaim(token, Claims::getExpiration);
 	}
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
 	private Boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
@@ -75,22 +50,10 @@ public class JwtService {
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 
-<<<<<<< HEAD
-    public Boolean validateToken1(String token, UserPrincipal userPrincipal) {
-        final String userId = extractId(token);
-        return (userId.equals(userPrincipal.getId()) && !isTokenExpired(token));
-    }
-
-    public String generateToken(String userName) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
-    }
-=======
 	public String generateToken(String userName) {
 		Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, userName);
 	}
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 
 	private String createToken(Map<String, Object> claims, String userName) {
 		return Jwts.builder().setClaims(claims).setSubject(userName).setIssuedAt(new Date(System.currentTimeMillis()))

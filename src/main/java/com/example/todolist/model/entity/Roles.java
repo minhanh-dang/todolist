@@ -22,10 +22,10 @@ public class Roles {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "roleName")
-	private RoleName roleName; // use String instead of RoleName? what's the difference
+	private RoleName roleName;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> users;
 
 }

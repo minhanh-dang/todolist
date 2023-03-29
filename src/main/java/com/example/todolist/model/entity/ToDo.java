@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ToDo")
+@Table(name = "todo")
 public class ToDo {
 
 	@Id
@@ -43,7 +43,7 @@ public class ToDo {
 	@Column(name = "status")
 	private ToDoStatus status;
 
-	@Column(updatable = false)
+	@Column(name = "dateCreated",updatable = false)
 	@CreationTimestamp
 	private Instant createdAt;
 

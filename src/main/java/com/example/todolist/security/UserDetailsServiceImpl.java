@@ -22,18 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		Optional<User> optUser = repository.findByUserName(userName);
 
-<<<<<<< HEAD
-        if(!optUser.isPresent()){
-            throw new BadRequestException("User Not Found");
-        }
-        return UserPrincipal.build(optUser.get());
-    }
-
-=======
 		if (!optUser.isPresent()) {
 			throw new BadRequestException("User Not Found");
 		}
 		return UserPrincipal.build(optUser.get());
 	}
->>>>>>> 37c92f4d0fa3a28715cb33e3820124eab1a6fa72
 }

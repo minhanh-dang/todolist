@@ -11,11 +11,11 @@ import java.security.Principal;
 @Controller
 public class SecurityController {
 
-    @GetMapping("/userID")
+    @GetMapping("/username")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ResponseBody
-    public Integer currentUserID(UserPrincipal principal) {
-        return principal.getId();
+    public String currentUserName(Principal principal) {
+        return principal.getName();
     }
 
 }

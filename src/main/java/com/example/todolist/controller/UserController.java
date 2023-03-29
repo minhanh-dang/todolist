@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
+
 	private final UserService userService;
 
 	private final UserMapper userMapper;
@@ -31,4 +32,3 @@ public class UserController {
 		return userMapper.toResponse(userDto);
 	}
 }
-
