@@ -1,6 +1,5 @@
 package com.example.todolist.model.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;

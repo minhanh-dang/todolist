@@ -1,33 +1,33 @@
 package com.example.todolist.service;
 
+import java.util.List;
+
 import com.example.todolist.model.DTO.ToDoDTO;
 import com.example.todolist.model.entity.User;
 
-import java.util.List;
-import java.util.Optional;
-
 public interface ToDoService {
-    String addUser(User userInfo);
+	String addUser(User userInfo);
 
-    List<User> addUsers(List<User> userInfos);
+	List<User> addUsers(List<User> userInfos);
 
 //    Optional<User> getUserById(int id);
 
-    List<User> getUsers(List<User> userInfos);
+	List<User> getUsers(List<User> userInfos);
 
-    User updateUser(User userInfo);
+	User updateUser(User userInfo);
 
-    String deleteUser(int id);
+	String deleteUser(int id);
 
-    ToDoDTO createToDo(ToDoDTO toDoDTO);
+	ToDoDTO createToDo(ToDoDTO toDoDTO);
 
-    List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS);
+	List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS);
 
-    List<ToDoDTO> getAllToDos();
+	List<ToDoDTO> getAllToDos();
 
 //    ToDoDTO getToDoById(int id);
 
-    ToDoDTO updateToDo(ToDoDTO toDo);
+	ToDoDTO updateToDo(ToDoDTO toDo);
 
-    String deleteToDo(int id);
+	String deleteToDo(int id);
+
 }

@@ -1,13 +1,12 @@
-package com.example.todolist.model.DTO;
+package com.example.todolist.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDto {
+public class UserRequest {
 
-	private Long id;
 	private String name;
 	private String password;
 }

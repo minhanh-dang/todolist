@@ -6,4 +6,6 @@ public interface UserService {
 
 	UserDto getUserById(Long id);
 
+	UserDto addUser(UserDto userDto);
+
 }

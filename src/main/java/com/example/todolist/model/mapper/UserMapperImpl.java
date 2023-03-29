@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.todolist.model.DTO.UserDto;
 import com.example.todolist.model.entity.User;
+import com.example.todolist.model.request.UserRequest;
 import com.example.todolist.model.response.UserInfoResponse;
 
 @Component
@@ -30,6 +31,16 @@ public class UserMapperImpl implements UserMapper {
 		response.setName(userDto.getName());
 
 		return response;
+	}
+
+	@Override
+	public UserDto toDto(UserRequest request) {
+
+		UserDto userDto = new UserDto();
+		userDto.setName(request.getName());
+		userDto.setPassword(request.getPassword());
+
+		return userDto;
 	}
 
 }
