@@ -28,6 +28,7 @@ public class ToDoServiceImpl implements ToDoService {
 
 	@Override
 	public String addUser(User userInfo) {
+		userInfo.setUserName(userInfo.getUserName());
 		userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 		userInfoRepository.save(userInfo);
 		return "User added";

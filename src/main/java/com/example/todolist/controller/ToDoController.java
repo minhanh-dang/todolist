@@ -71,6 +71,6 @@ public class ToDoController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     ResponseEntity<String> deleteUser(@PathVariable int id) {
         service.deleteUser(id);
-        return new ResponseEntity<>("Product successfully deleted!", HttpStatus.OK);
+        return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
     }
 }

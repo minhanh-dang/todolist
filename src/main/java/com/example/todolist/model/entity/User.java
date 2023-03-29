@@ -33,7 +33,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "userName")
+	@Column(name = "user_name")
 	private String userName;
 
 	@Column(name = "password")
@@ -41,10 +41,10 @@ public class User {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Roles> roles = new HashSet<>();
+	private Set<Roles> roles;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 //    @JoinTable(name = "user_roles")
-	private Set<ToDo> toDos = new HashSet<>();
+	private Set<ToDo> toDos;
 
 }

@@ -21,7 +21,7 @@ public class Roles {
 	private long id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "roleName")
+	@Column(name = "role_name")
 	private RoleName roleName;
 
 	@ManyToMany(fetch = FetchType.LAZY)
