@@ -1,36 +1,29 @@
 package com.example.todolist.service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.todolist.model.DTO.UserDto;
-import com.example.todolist.model.entity.*;
-import com.example.todolist.model.mapper.UserMapper;
-import com.example.todolist.model.response.UserInfoResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.todolist.model.DTO.ToDoDTO;
+import com.example.todolist.model.entity.ToDo;
+import com.example.todolist.model.entity.ToDoStatus;
+import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.ToDoMapper;
 import com.example.todolist.repository.ToDoRepository;
 import com.example.todolist.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ToDoServiceImpl implements ToDoService {
 
-	@Autowired
-	private ToDoRepository toDoRepository;
+	private final ToDoRepository toDoRepository;
 
-	@Autowired
-	private UserRepository userInfoRepository;
+	private final UserRepository userRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	private ToDoMapper toDoMapper;
-
+	private final ToDoMapper toDoMapper;
 
 	@Override
 	public ToDoDTO createToDo(ToDoDTO toDoDTO) {
@@ -72,7 +65,7 @@ public class ToDoServiceImpl implements ToDoService {
 
 	@Override
 	public ToDoDTO updateToDo(ToDoDTO toDo) {
-		ToDo existingToDo = toDoRepository.findById(toDo.getId());
+		ToDo existingToDo = toDoRepository.findById(toDo.getId()).get();
 		existingToDo.setName(toDo.getName());
 		existingToDo.setStatus(toDo.getStatus());
 		ToDo updatedToDo = toDoRepository.save(existingToDo);
@@ -80,8 +73,21 @@ public class ToDoServiceImpl implements ToDoService {
 	}
 
 	@Override
-	public String deleteToDo(int id) {
+	public String deleteToDo(Long id) {
 		toDoRepository.deleteById(id);
 		return "ToDo removed: " + id;
+	}
+
+	@Override
+	public ToDoDTO createToDo(Long id, ToDoDTO toDoDTO) {
+
+		User user = userRepository.findById(id).get();
+		ToDo toDo = new ToDo();
+		toDo.setName(toDoDTO.getName());
+		toDo.setUser(user);
+		toDo.setStatus(ToDoStatus.TO_DO);
+		ToDo savedToDo = toDoRepository.save(toDo);
+
+		return toDoMapper.toDTO(savedToDo);
 	}
 }

@@ -1,8 +1,9 @@
 package com.example.todolist.model.DTO;
 
+import java.time.Instant;
 
 import com.example.todolist.model.entity.ToDoStatus;
-import com.example.todolist.model.entity.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ToDoDTO {
-    private int id;
-    private Long userId;
-    private String name;
-    private ToDoStatus status;
-    private java.sql.Date dateCreated;
+	private Long id;
+	private String name;
+	private ToDoStatus status;
+	private Instant dateCreated;
+	private UserDto userDto;
 }

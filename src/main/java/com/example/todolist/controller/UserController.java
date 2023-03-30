@@ -8,7 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.todolist.model.DTO.UserDto;
+import com.example.todolist.model.mapper.ToDoMapper;
 import com.example.todolist.model.mapper.UserMapper;
+import com.example.todolist.model.request.ToDoRequest;
+import com.example.todolist.model.response.ToDoResponse;
 import com.example.todolist.model.response.UserInfoResponse;
 import com.example.todolist.security.CurrentUser;
 import com.example.todolist.security.UserPrincipal;
@@ -29,6 +32,8 @@ public class UserController {
 
 	private final UserMapper userMapper;
 
+	private final ToDoMapper todoMapper;
+
 	@GetMapping("/me")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public UserInfoResponse getCurrentUser(@CurrentUser UserPrincipal currentUser) {
@@ -39,11 +44,11 @@ public class UserController {
 	}
 
 	@PostMapping("/addToDo")
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
-//	@PreAuthorize("#toDoDTO.userId == authentication.principal.username")
-	public ResponseEntity<ToDoDTO> createToDo(@RequestBody ToDoDTO toDoDTO){
-		ToDoDTO savedToDoDTO = toDoService.createToDo(toDoDTO);
-		return new ResponseEntity<>(savedToDoDTO, HttpStatus.CREATED);
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ToDoResponse createToDo(@RequestBody ToDoRequest request, @CurrentUser UserPrincipal currentUser) {
+		ToDoDTO toDoDTO = ToDoMapper.getInstance().toDto(request);
+		ToDoDTO savedToDoDTO = toDoService.createToDo(currentUser.getId(), toDoDTO);
+		return todoMapper.toResponse(savedToDoDTO);
 	}
 
 //	@PostMapping("/addToDos")
@@ -55,23 +60,23 @@ public class UserController {
 
 	@GetMapping("/todos")
 	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-	public ResponseEntity<List<ToDoDTO>> getAllToDos(){
+	public ResponseEntity<List<ToDoDTO>> getAllToDos() {
 		List<ToDoDTO> toDos = toDoService.getAllToDos();
-		return new ResponseEntity<>(toDos,HttpStatus.OK);
+		return new ResponseEntity<>(toDos, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateToDo")
 	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
-	public ResponseEntity<ToDoDTO> updateToDo(@RequestBody ToDoDTO toDoDTO){
+	public ResponseEntity<ToDoDTO> updateToDo(@RequestBody ToDoDTO toDoDTO) {
 		ToDoDTO updatedToDo = toDoService.updateToDo(toDoDTO);
 		return new ResponseEntity<>(updatedToDo, HttpStatus.OK);
 	}
 
-	@DeleteMapping ("/deleteProduct/{id}")
+	@DeleteMapping("/deleteProduct/{id}")
 	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
-	public ResponseEntity<String> deleteToDo(@PathVariable int id){
+	public ResponseEntity<String> deleteToDo(@PathVariable Long id) {
 		toDoService.deleteToDo(id);
-		return new ResponseEntity<>("ToDo successfully deleted!",HttpStatus.OK);
+		return new ResponseEntity<>("ToDo successfully deleted!", HttpStatus.OK);
 	}
 
 }

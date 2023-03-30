@@ -19,7 +19,6 @@ import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.UserMapper;
 import com.example.todolist.model.request.UserRequest;
 import com.example.todolist.model.response.UserInfoResponse;
-import com.example.todolist.service.ToDoService;
 import com.example.todolist.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,8 +27,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ToDoController {
-
-	private final ToDoService service;
 
 	private final UserMapper userMapper;
 

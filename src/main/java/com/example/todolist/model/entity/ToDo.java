@@ -29,8 +29,8 @@ import lombok.Setter;
 public class ToDo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -43,7 +43,7 @@ public class ToDo {
 	@Column(name = "status")
 	private ToDoStatus status;
 
-	@Column(name = "dateCreated",updatable = true)
+	@Column(name = "dateCreated", updatable = true)
 	@CreationTimestamp
 	private Instant createdAt;
 
