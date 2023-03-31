@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.todolist.model.request.UserRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,14 +54,12 @@ public class UserServiceImpl implements UserService {
 		return addUserDto;
 	}
 
-
 	@Override
 	public List<UserDto> getAllUsers() {
-		return userRepository.findAll().stream().map(user -> userMapper.toDto(user))
-				.collect(Collectors.toList());
+		return userRepository.findAll().stream().map(user -> userMapper.toDto(user)).collect(Collectors.toList());
 	}
 
-	//	@Override
+	// @Override
 //	public String addUser(User userInfo) {
 //		userInfo.setUserName(userInfo.getUserName());
 //		userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));

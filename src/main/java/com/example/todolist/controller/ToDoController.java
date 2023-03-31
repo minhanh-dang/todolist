@@ -3,7 +3,6 @@ package com.example.todolist.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.todolist.model.mapper.ToDoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.todolist.model.DTO.UserDto;
-import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.UserMapper;
 import com.example.todolist.model.request.UserRequest;
 import com.example.todolist.model.response.UserInfoResponse;
@@ -56,8 +54,7 @@ public class ToDoController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	List<UserInfoResponse> getUsers() {
 		List<UserDto> users = userService.getAllUsers();
-		return users.stream().map(user -> userMapper.toResponse(user))
-				.collect(Collectors.toList());
+		return users.stream().map(user -> userMapper.toResponse(user)).collect(Collectors.toList());
 	}
 
 	@PutMapping("/updateUser")

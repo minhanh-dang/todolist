@@ -3,13 +3,18 @@ package com.example.todolist.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.todolist.model.DTO.UserDto;
-import com.example.todolist.model.mapper.UserMapper;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
+
 import com.example.todolist.model.DTO.ToDoDTO;
+import com.example.todolist.model.DTO.UserDto;
 import com.example.todolist.model.entity.ToDo;
+import com.example.todolist.model.entity.ToDoStatus;
 import com.example.todolist.model.entity.User;
+import com.example.todolist.model.exception.BadRequestException;
 import com.example.todolist.model.mapper.ToDoMapper;
+import com.example.todolist.model.mapper.UserMapper;
 import com.example.todolist.repository.ToDoRepository;
 import com.example.todolist.repository.UserRepository;
 
@@ -19,16 +24,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ToDoServiceImpl implements ToDoService {
 
-	private ToDoRepository toDoRepository;
+	private final ToDoRepository toDoRepository;
 
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	private ToDoMapper toDoMapper;
+	private final ToDoMapper toDoMapper;
 
-	private UserMapper userMapper;
+	private final UserMapper userMapper;
 
 	@Override
-	public ToDoDTO getToDoById(Long id){
+	public ToDoDTO getToDoById(Long id) {
 		ToDo toDo = toDoRepository.findById(id).get();
 
 		ToDoDTO toDoDTO = toDoMapper.toDTO(toDo);
@@ -36,7 +41,8 @@ public class ToDoServiceImpl implements ToDoService {
 		return toDoDTO;
 	}
 
-	// get a ToDoDTO, initialize a new ToDo with name, status; save it in repo and the convert it to DTO again.
+	// get a ToDoDTO, initialize a new ToDo with name, status; save it in repo and
+	// the convert it to DTO again.
 	@Override
 	public ToDoDTO createToDo(ToDoDTO toDoDTO) {
 		ToDo toDo = new ToDo();
@@ -48,16 +54,19 @@ public class ToDoServiceImpl implements ToDoService {
 	}
 
 	@Override
+	@Transactional
 	public ToDoDTO createToDo(Long id, ToDoDTO toDoDTO) {
 
-		User user = userRepository.findById(id).get();
+		User user = userRepository.findById(id).orElseThrow(() -> new BadRequestException("User not found!"));
+
 		ToDo toDo = new ToDo();
 		toDo.setName(toDoDTO.getName());
 		toDo.setUser(user);
-		toDo.setStatus(toDoDTO.getStatus());
+		toDo.setStatus(ToDoStatus.TO_DO);
 		ToDo savedToDo = toDoRepository.save(toDo);
 
 		return toDoMapper.toDTO(savedToDo);
+
 	}
 
 	/////// GET method //////////
@@ -72,13 +81,14 @@ public class ToDoServiceImpl implements ToDoService {
 	}
 
 	@Override
-	public List<ToDoDTO> getUserToDo(Long id){
+	public List<ToDoDTO> getUserToDo(Long id) {
 		List<ToDoDTO> toDoDTOS = toDoRepository.findAll().stream().map(todo -> ToDoMapper.getInstance().toDTO(todo))
 				.collect(Collectors.toList());
 		List<UserDto> userDtos = userRepository.findAll().stream().map(user -> userMapper.toDto(user))
 				.collect(Collectors.toList());
-		List<ToDoDTO> result = toDoDTOS.stream().filter(todo -> userDtos.stream()
-				.anyMatch(user -> user.getId().equals(id))).collect(Collectors.toList());
+		List<ToDoDTO> result = toDoDTOS.stream()
+				.filter(todo -> userDtos.stream().anyMatch(user -> user.getId().equals(id)))
+				.collect(Collectors.toList());
 //		List<ToDoResponse> result = toDoResponses.stream().map(todo -> ToDoMapper.getInstance().toResponse(todo))
 //				.collect(Collectors.toList());
 		return result;

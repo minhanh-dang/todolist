@@ -27,33 +27,30 @@ public class ToDoMapper {
 		return toDo;
 	}
 
-    public ToDoDTO toDTO(ToDo toDo) {
-        ToDoDTO toDoDTO = new ToDoDTO();
-        toDoDTO.setId(toDo.getId());
-        toDoDTO.setName(toDo.getName());
-        toDoDTO.setStatus(toDo.getStatus());
-        toDoDTO.setDateCreated(toDo.getCreatedAt());
-        toDoDTO.setUserDto(toDoDTO.getUserDto());
-        return toDoDTO;
-    }
+	public ToDoDTO toDTO(ToDo toDo) {
+		ToDoDTO toDoDTO = new ToDoDTO();
+		toDoDTO.setId(toDo.getId());
+		toDoDTO.setName(toDo.getName());
+		toDoDTO.setStatus(toDo.getStatus());
+		toDoDTO.setDateCreated(toDo.getCreatedAt());
+		toDoDTO.setUserDto(toDoDTO.getUserDto());
+		return toDoDTO;
+	}
 
-    public ToDoDTO toDto(ToDoRequest request){
-        ToDoDTO toDoDTO = new ToDoDTO();
-        toDoDTO.setName(request.getName());
-        toDoDTO.setStatus(request.getStatus());
-        return toDoDTO;
-    }
+	public ToDoDTO toDto(ToDoRequest request) {
+		ToDoDTO toDoDTO = new ToDoDTO();
+		toDoDTO.setName(request.getName());
+		return toDoDTO;
+	}
 
+	public ToDoResponse toResponse(ToDoDTO toDo) {
+		ToDoResponse response = new ToDoResponse();
+		response.setId(toDo.getId());
+		response.setName(toDo.getName());
+		response.setStatus(toDo.getStatus().name());
 
-
-    public ToDoResponse toResponse(ToDoDTO toDo){
-        ToDoResponse response = new ToDoResponse();
-        response.setId(toDo.getId());
-        response.setName(toDo.getName());
-        response.setStatus(toDo.getStatus().name());
-
-        response.setCreatedAt(toDo.getDateCreated());
-        return response;
-    }
+		response.setCreatedAt(toDo.getDateCreated());
+		return response;
+	}
 
 }

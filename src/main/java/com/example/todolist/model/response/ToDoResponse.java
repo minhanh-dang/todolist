@@ -1,17 +1,17 @@
 package com.example.todolist.model.response;
 
+import java.time.Instant;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @Setter
 public class ToDoResponse {
 
-    private Long id;
-    private String name;
-    private String status;
-    private Date createdAt;
+	private Long id;
+	private String name;
+	private String status;
+	private Instant createdAt;
 
 }

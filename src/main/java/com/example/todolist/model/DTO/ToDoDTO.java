@@ -1,7 +1,6 @@
 package com.example.todolist.model.DTO;
 
-import java.util.Date;
-
+import java.time.Instant;
 
 import com.example.todolist.model.entity.ToDoStatus;
 
@@ -15,10 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ToDoDTO {
-    private Long id;
-    private String name;
-    private ToDoStatus status;
-    private Date dateCreated;
-    private UserDto userDto;
+	private Long id;
+	private String name;
+	private ToDoStatus status;
+	private Instant dateCreated;
+	private UserDto userDto;
 
 }

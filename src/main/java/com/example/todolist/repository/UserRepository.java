@@ -1,12 +1,17 @@
 package com.example.todolist.repository;
 
-import com.example.todolist.model.entity.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.example.todolist.model.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByUserName(String userName);
+
+	@Query(value = "SELECT u FROM User u WHERE u.id=:id")
+	Optional<User> findByUserId(Long id);
 }

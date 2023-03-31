@@ -1,7 +1,5 @@
 package com.example.todolist.model.request;
 
-import com.example.todolist.model.entity.ToDoStatus;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class ToDoRequest {
 
-
-    private String name;
-    private ToDoStatus status;
+	private String name;
 
 }
