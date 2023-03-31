@@ -2,6 +2,7 @@ package com.example.todolist.service;
 
 import com.example.todolist.model.DTO.UserDto;
 import com.example.todolist.model.entity.User;
+import com.example.todolist.model.request.UserRequest;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ public interface UserService {
 
 	List<UserDto> getAllUsers();
 
-	User updateUser(User userInfo);
+	UserDto updateUser(UserDto userInfo);
 
-	String deleteUser(int id);
+	String deleteUser(Long id);
 
 }

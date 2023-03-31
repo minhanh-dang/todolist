@@ -3,7 +3,9 @@ package com.example.todolist.service;
 import java.util.List;
 
 import com.example.todolist.model.DTO.ToDoDTO;
+import com.example.todolist.model.DTO.UserDto;
 import com.example.todolist.model.entity.User;
+import com.example.todolist.model.response.ToDoResponse;
 
 public interface ToDoService {
 //	String addUser(User userInfo);
@@ -18,10 +20,14 @@ public interface ToDoService {
 
 	List<ToDoDTO> getAllToDos();
 
-//    ToDoDTO getToDoById(int id);
+	List<ToDoDTO> getUserToDo(Long id);
 
-	ToDoDTO updateToDo(ToDoDTO toDo);
+    ToDoDTO getToDoById(Long id);
 
-	String deleteToDo(int id);
+	ToDoDTO updateToDo(Long id, ToDoDTO toDo);
+
+	String deleteToDo(Long id);
+
+	ToDoDTO createToDo(Long id, ToDoDTO toDoDTO);
 
 }

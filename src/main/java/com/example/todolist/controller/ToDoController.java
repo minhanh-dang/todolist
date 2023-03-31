@@ -1,7 +1,9 @@
 package com.example.todolist.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.example.todolist.model.mapper.ToDoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,21 +57,23 @@ public class ToDoController {
 
 	@GetMapping("/users")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	ResponseEntity<List<UserDto>> getUsers() {
+	List<UserInfoResponse> getUsers() {
 		List<UserDto> users = userService.getAllUsers();
-		return new ResponseEntity<>(users, HttpStatus.OK);
+		return users.stream().map(user -> userMapper.toResponse(user))
+				.collect(Collectors.toList());
 	}
 
 	@PutMapping("/updateUser")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	ResponseEntity<User> updateUser(@RequestBody User userInfo) {
-		User updatedUser = userService.updateUser(userInfo);
-		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+	UserInfoResponse updateUser(@RequestBody UserRequest userRequest) {
+		UserDto userDto = userMapper.toDto(userRequest);
+		UserDto updatedUser = userService.updateUser(userDto);
+		return userMapper.toResponse(updatedUser);
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	ResponseEntity<String> deleteUser(@PathVariable int id) {
+	ResponseEntity<String> deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
 		return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
 	}

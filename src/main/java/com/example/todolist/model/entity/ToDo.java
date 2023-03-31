@@ -1,6 +1,7 @@
 package com.example.todolist.model.entity;
 
 import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class ToDo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -43,8 +44,8 @@ public class ToDo {
 	@Column(name = "status")
 	private ToDoStatus status;
 
-	@Column(name = "dateCreated",updatable = true)
+	@Column(name = "dateCreated",updatable = false)
 	@CreationTimestamp
-	private Instant createdAt;
+	private Date createdAt;
 
 }

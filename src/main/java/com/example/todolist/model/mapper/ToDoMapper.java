@@ -2,7 +2,12 @@ package com.example.todolist.model.mapper;
 
 import com.example.todolist.model.DTO.ToDoDTO;
 import com.example.todolist.model.entity.ToDo;
+import com.example.todolist.model.request.ToDoRequest;
+import com.example.todolist.model.response.ToDoResponse;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class ToDoMapper {
 
     private static ToDoMapper INSTANCE;
@@ -22,11 +27,32 @@ public class ToDoMapper {
         return toDo;
     }
 
-    public ToDoDTO toDTO(ToDo toDo){
+    public ToDoDTO toDTO(ToDo toDo) {
         ToDoDTO toDoDTO = new ToDoDTO();
         toDoDTO.setId(toDo.getId());
         toDoDTO.setName(toDo.getName());
         toDoDTO.setStatus(toDo.getStatus());
+        toDoDTO.setDateCreated(toDo.getCreatedAt());
+        toDoDTO.setUserDto(toDoDTO.getUserDto());
         return toDoDTO;
+    }
+
+    public ToDoDTO toDto(ToDoRequest request){
+        ToDoDTO toDoDTO = new ToDoDTO();
+        toDoDTO.setName(request.getName());
+        toDoDTO.setStatus(request.getStatus());
+        return toDoDTO;
+    }
+
+
+
+    public ToDoResponse toResponse(ToDoDTO toDo){
+        ToDoResponse response = new ToDoResponse();
+        response.setId(toDo.getId());
+        response.setName(toDo.getName());
+        response.setStatus(toDo.getStatus().name());
+
+        response.setCreatedAt(toDo.getDateCreated());
+        return response;
     }
 }

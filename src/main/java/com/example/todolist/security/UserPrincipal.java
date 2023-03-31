@@ -118,4 +118,6 @@ public class UserPrincipal implements UserDetails {
 		UserPrincipal user = (UserPrincipal) o;
 		return Objects.equals(id, user.id);
 	}
+
+
 }

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.todolist.model.request.UserRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
 //	}
 
 	@Override
-	public User updateUser(User userInfo) {
+	public UserDto updateUser(UserDto userInfo) {
 //        User existingUser = userInfoRepository.findById(userInfo.getId()).orElse(null);
 //        existingUser.setUserName(userInfo.getUserName());
 //        existingUser.setPassword(userInfo.getPassword());
@@ -89,8 +90,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deleteUser(int id) {
-//		userInfoRepository.deleteById(id);
+	public String deleteUser(Long id) {
+		userRepository.deleteById(id);
 //		return "User deleted: " + id;
 		return null;
 	}

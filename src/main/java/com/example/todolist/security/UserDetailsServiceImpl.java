@@ -27,4 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		return UserPrincipal.build(optUser.get());
 	}
+
+
 }
