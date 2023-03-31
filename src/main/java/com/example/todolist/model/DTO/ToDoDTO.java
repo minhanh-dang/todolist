@@ -1,7 +1,7 @@
 package com.example.todolist.model.DTO;
 
-import java.time.Instant;
 import java.util.Date;
+
 
 import com.example.todolist.model.entity.ToDoStatus;
 
@@ -20,4 +20,5 @@ public class ToDoDTO {
     private ToDoStatus status;
     private Date dateCreated;
     private UserDto userDto;
+
 }

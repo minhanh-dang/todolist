@@ -3,7 +3,6 @@ package com.example.todolist.model.response;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Getter
@@ -14,4 +13,5 @@ public class ToDoResponse {
     private String name;
     private String status;
     private Date createdAt;
+
 }

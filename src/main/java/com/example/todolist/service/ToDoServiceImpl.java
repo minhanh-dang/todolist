@@ -1,23 +1,19 @@
 package com.example.todolist.service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.todolist.model.DTO.UserDto;
-import com.example.todolist.model.entity.*;
 import com.example.todolist.model.mapper.UserMapper;
-import com.example.todolist.model.response.ToDoResponse;
-import com.example.todolist.model.response.UserInfoResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.todolist.model.DTO.ToDoDTO;
+import com.example.todolist.model.entity.ToDo;
+import com.example.todolist.model.entity.User;
 import com.example.todolist.model.mapper.ToDoMapper;
 import com.example.todolist.repository.ToDoRepository;
 import com.example.todolist.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -64,14 +60,6 @@ public class ToDoServiceImpl implements ToDoService {
 		return toDoMapper.toDTO(savedToDo);
 	}
 
-//	@Override
-//	public List<ToDoDTO> createToDos(List<ToDoDTO> toDoDTOS) {
-//		List<ToDo> toDos = toDoDTOS.stream().map(toDo -> ToDoMapper.getInstance().toEntity(toDo))
-//				.collect(Collectors.toList());
-//		List<ToDoDTO> toDoDTOList = toDos.stream()
-//				.map(toDo -> ToDoMapper.getInstance().toDTO(toDoRepository.save(toDo))).collect(Collectors.toList());
-//		return toDoDTOList;
-//	}
 	/////// GET method //////////
 
 	@Override
@@ -110,7 +98,7 @@ public class ToDoServiceImpl implements ToDoService {
 
 	@Override
 	public ToDoDTO updateToDo(Long id, ToDoDTO toDo) {
-		ToDo existingToDo = toDoRepository.findById(id).get();
+		ToDo existingToDo = toDoRepository.findById(toDo.getId()).get();
 		existingToDo.setName(toDo.getName());
 		existingToDo.setStatus(toDo.getStatus());
 		ToDo updatedToDo = toDoRepository.save(existingToDo);
