@@ -1,5 +1,6 @@
 package com.example.todolist.model.mapper;
 
+import com.example.todolist.model.entity.ToDoStatus;
 import org.springframework.stereotype.Component;
 
 import com.example.todolist.model.DTO.ToDoDTO;
@@ -40,6 +41,15 @@ public class ToDoMapper {
 	public ToDoDTO toDto(ToDoRequest request) {
 		ToDoDTO toDoDTO = new ToDoDTO();
 		toDoDTO.setName(request.getName());
+		if(request.getStatus() == ToDoStatus.TO_DO){
+			toDoDTO.setStatus(ToDoStatus.TO_DO);
+		}
+		else if(request.getStatus() == ToDoStatus.DOING){
+			toDoDTO.setStatus(ToDoStatus.DOING);
+		}
+		else if(request.getStatus() == ToDoStatus.DONE){
+			toDoDTO.setStatus(ToDoStatus.DONE);
+		}
 		return toDoDTO;
 	}
 

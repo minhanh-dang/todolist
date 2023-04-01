@@ -62,7 +62,8 @@ public class ToDoServiceImpl implements ToDoService {
 		ToDo toDo = new ToDo();
 		toDo.setName(toDoDTO.getName());
 		toDo.setUser(user);
-		toDo.setStatus(ToDoStatus.TO_DO);
+		toDo.setStatus(toDoDTO.getStatus());
+//		toDo.setStatus(ToDoStatus.TO_DO);
 		ToDo savedToDo = toDoRepository.save(toDo);
 
 		return toDoMapper.toDTO(savedToDo);
@@ -82,15 +83,9 @@ public class ToDoServiceImpl implements ToDoService {
 
 	@Override
 	public List<ToDoDTO> getUserToDo(Long id) {
-		List<ToDoDTO> toDoDTOS = toDoRepository.findAll().stream().map(todo -> ToDoMapper.getInstance().toDTO(todo))
+		List<ToDo> todo = toDoRepository.findByUserId(id).orElseThrow(()-> new BadRequestException("ToDo not found!"));
+		List<ToDoDTO> result = todo.stream().map(t -> toDoMapper.toDTO(t))
 				.collect(Collectors.toList());
-		List<UserDto> userDtos = userRepository.findAll().stream().map(user -> userMapper.toDto(user))
-				.collect(Collectors.toList());
-		List<ToDoDTO> result = toDoDTOS.stream()
-				.filter(todo -> userDtos.stream().anyMatch(user -> user.getId().equals(id)))
-				.collect(Collectors.toList());
-//		List<ToDoResponse> result = toDoResponses.stream().map(todo -> ToDoMapper.getInstance().toResponse(todo))
-//				.collect(Collectors.toList());
 		return result;
 	}
 
@@ -108,7 +103,7 @@ public class ToDoServiceImpl implements ToDoService {
 
 	@Override
 	public ToDoDTO updateToDo(Long id, ToDoDTO toDo) {
-		ToDo existingToDo = toDoRepository.findById(toDo.getId()).get();
+		ToDo existingToDo = toDoRepository.findById(id).orElseThrow(() -> new BadRequestException("ToDo not found!"));;
 		existingToDo.setName(toDo.getName());
 		existingToDo.setStatus(toDo.getStatus());
 		ToDo updatedToDo = toDoRepository.save(existingToDo);

@@ -3,6 +3,7 @@ package com.example.todolist.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.todolist.model.exception.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,7 +52,7 @@ public class UserController {
 	}
 
 	@PostMapping("/addToDo")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
 	public ToDoResponse createToDo(@RequestBody ToDoRequest request, @CurrentUser UserPrincipal currentUser) {
 		ToDoDTO toDoDTO = ToDoMapper.getInstance().toDto(request);
 		System.out.println(toDoDTO.getName());
@@ -60,32 +61,36 @@ public class UserController {
 	}
 
 	@GetMapping("/todos")
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public List<ToDoResponse> getAllToDos() {
 		List<ToDoDTO> toDoDTO = toDoService.getAllToDos();
 		return toDoDTO.stream().map(todo -> ToDoMapper.getInstance().toResponse(todo)).collect(Collectors.toList());
 	}
 
-	@GetMapping("/me/todos")
+	@GetMapping("/my-todos")
 	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
 	public List<ToDoResponse> getUserToDo(@CurrentUser UserPrincipal currentUser) {
 		List<ToDoDTO> toDoDTO = toDoService.getUserToDo(currentUser.getId());
-		return toDoDTO.stream().map(todo -> ToDoMapper.getInstance().toResponse(todo)).collect(Collectors.toList());
+		return toDoDTO.stream().map(todo -> todoMapper.toResponse(todo)).collect(Collectors.toList());
 	}
 
-	@PutMapping("/me/updateToDo/{todo_id}")
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
-	public ToDoResponse updateToDo(@CurrentUser UserPrincipal currentUser, @PathVariable Long todo_id,
-			@RequestBody ToDoRequest toDoRequest) {
+	@PutMapping("{user_id}/updateToDo/{todo_id}")
+	@PreAuthorize("#user_id == #currentUser.id")
+	public ToDoResponse updateToDo(@CurrentUser UserPrincipal currentUser, @PathVariable Long user_id, @PathVariable Long todo_id,
+								   @RequestBody ToDoRequest toDoRequest){
+
 		ToDoDTO updatedToDo = toDoService.updateToDo(todo_id, todoMapper.toDto(toDoRequest));
 		return todoMapper.toResponse(updatedToDo);
+
 	}
 
-	@DeleteMapping("/me/deleteToDo/{id}")
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
-	public ResponseEntity<String> deleteToDo(@PathVariable Long id, @CurrentUser UserPrincipal currentUser) {
-		toDoService.deleteToDo(id);
-		return new ResponseEntity<>("ToDo successfully deleted!", HttpStatus.OK);
+	@DeleteMapping("{user_id}/deleteToDo/{todo_id}")
+	@PreAuthorize("#user_id == #currentUser.id")
+	public ResponseEntity<String> deleteToDo(@PathVariable Long user_id, @PathVariable Long todo_id,
+											 @CurrentUser UserPrincipal currentUser){
+
+			toDoService.deleteToDo(todo_id);
+			return new ResponseEntity<>("ToDo successfully deleted!", HttpStatus.OK);
 	}
 
 }
